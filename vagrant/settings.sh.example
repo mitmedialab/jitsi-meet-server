@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Example custom settings file. Copy this to settings.sh in the same directory
+# to customize any of the listed installation variables. Default values are
+# shown in the commented out lines.
+
+# Space-separated list of ports to verify as open on the host.
+#PORTS_TO_CHECK="2222"
+
+# Directory where the Vagrantfile and development deployment scripts live. It
+# will be auto-configured by the deployment script, and is included here only
+# for reference.
+#VAGRANT_CONFIG_DIR=
+
+# Install path for the virtual machine. Make sure that the user executing the
+# installation script has permissions to create this directory.
+#VM_INSTALL_DIR="${HOME}/vagrant/unhangout-video-server"
+
+# Box name to use for the Vagrantfile, config.vm.box setting.
+#VAGRANT_VM_BOX="debian/jessie64"
+
+# Directory where the salt and pillar file roots are located. This is auto
+# configured by the deployement script, so unless you're doing something
+# custom, it's advised not to edit it.
+#SALT_DIR="`dirname $VAGRANT_CONFIG_DIR`/salt"
+
+# The port on the host to use for connecting to the VM's SSH daemon.
+#SSH_PORT="2222"
+
+# The label for the entry to be placed in .ssh/config.
+#SSH_CONFIG_LABEL="example"
+
+# The minion ID to be used in /etc/salt/minion.
+#SALT_MINION_ID="localhost.localdomain"
+
+# I've seen instances where the files need a bit of time to sync to shared
+# folders on the host. Setting this to 'yes' allows 60 seconds for that before
+# the reboot after the salt provisioning.
+#ALLOW_VM_FILE_SYNC_TIME="no"

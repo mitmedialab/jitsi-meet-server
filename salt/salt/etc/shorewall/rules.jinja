@@ -1,0 +1,29 @@
+######################################################################################################################################################################################################
+#ACTION   SOURCE    DEST    PROTO DEST  SOURCE    ORIGINAL  RATE    USER/ MARK  CONNLIMIT TIME    HEADERS   SWITCH    HELPER
+#             PORT  PORT(S)   DEST    LIMIT   GROUP
+?SECTION ALL
+?SECTION ESTABLISHED
+?SECTION RELATED
+?SECTION INVALID
+?SECTION UNTRACKED
+?SECTION NEW
+
+Invalid(DROP) net   $FW     tcp
+
+ACCEPT    net       $FW     tcp   {{ sshd_port }}
+
+# TODO: Fix up ports.
+{% for port in ['80', '443', '8082'] -%}
+ACCEPT    net       $FW     tcp   {{ port }}
+{% endfor -%}
+
+# TODO: Fix up ports.
+{% for port in [] -%}
+ACCEPT    net       $FW     tcp   {{ port }}
+ACCEPT    net       $FW     udp   {{ port }}
+{% endfor -%}
+
+# TODO: Fix up ports.
+ACCEPT    net       $FW     udp   10000:35000
+
+Ping(ACCEPT)  net   $FW

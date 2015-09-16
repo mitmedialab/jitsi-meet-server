@@ -1,0 +1,25 @@
+# This file contains all variables that are referenced in other SLS files
+# which may be customized.
+#
+# NOTE: Do not customize the variables here! Do so in an appropriate pillar
+# or grain file, see Salt documentation for details: http://docs.saltstack.com
+
+# Server environment.
+{% set server_env = salt['grains.get']('server:env', 'development') -%}
+{% set server_type = salt['grains.get']('server:type', '') -%}
+{% set server_timezone = salt['pillar.get']('server:timezone', 'America/Denver') -%}
+{% set server_encryption_password = salt['pillar.get']('software:server:encryption_password', 'ClueCon') -%}
+
+# Network.
+# The server ID, set by the salt minion config file - must be edited there.
+{% set server_id = grains['id'] -%}
+
+# SSH.
+# Port to run the SSH daemon on.
+{% set sshd_port = salt['pillar.get']('service:sshd:port', 22) -%}
+# SSH pubkeys to insert for the root user. See pillar/server/ examples.
+{% set ssh_pubkeys_root = salt['pillar.get']('ssh:pubkeys:root', {}) -%}
+
+# Network.
+{% set host_entries = salt['pillar.get']('server:network:host_entries', []) -%}
+

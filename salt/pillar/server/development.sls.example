@@ -1,0 +1,18 @@
+# Example pillar file for a build of a local development server.
+#
+# Only required settings are listed here, the rest use the default values found
+# in salt/salt/vars.jinja, and can be overridden here.
+#
+# For more details on how to write pillar files, see:
+# http://docs.saltstack.com/en/latest/topics/pillar
+
+# Add SSH public keys here for users you wish to have root access to the server.
+#ssh:
+#  pubkeys:
+#    root:
+#      foo@example.com:
+#        key: somesshpubkey
+#        # For details on this setting, see
+#        # http://docs.saltstack.com/en/latest/ref/states/all/salt.states.ssh_auth.html#salt.states.ssh_auth.present
+#        # Default is ssh-rsa.
+#        enc: ssh-rsa
