@@ -12,7 +12,7 @@ base:
     - repo
     - misc
     - software.git
-    - software.misc
     - service.salt-minion
     - service.ntp
     - service.postfix
+    - software.jitsi-meet

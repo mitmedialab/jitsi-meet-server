@@ -14,6 +14,7 @@ base-packages:
       - mutt
       - patch
       - patchutils
+      - python-apt
       - tcpdump
       - telnet
       - tmux
