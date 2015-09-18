@@ -23,3 +23,7 @@
 # Network.
 {% set host_entries = salt['pillar.get']('server:network:host_entries', []) -%}
 
+# Jitsi.
+
+{% set jitsi_videobridge_password = salt['pillar.get']('software:jisti:videobridge:password', 'secret') -%}
+{% set jicofo_password = salt['pillar.get']('software:jisti:jicofo:password', 'secret') -%}
