@@ -11,8 +11,6 @@ salt/pillar/server/common.sls
 salt/pillar/server/development.sls
 salt/pillar/server/production.sls
 
-# HTTPS certs.
-salt/salt/etc/ssl/cert.pem
-salt/salt/etc/ssl/chain.pem
-salt/salt/etc/ssl/key.pem
+# SSL certs.
+salt/salt/software/jitsi-meet/certs/
 
