@@ -17,7 +17,7 @@
 #VM_INSTALL_DIR="${HOME}/vagrant/unhangout-video-server"
 
 # Box name to use for the Vagrantfile, config.vm.box setting.
-#VAGRANT_VM_BOX="debian/jessie64"
+#VAGRANT_VM_BOX="bento/debian-8.2"
 
 # Directory where the salt and pillar file roots are located. This is auto
 # configured by the deployement script, so unless you're doing something
