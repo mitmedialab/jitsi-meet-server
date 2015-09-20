@@ -34,3 +34,23 @@ symlink-prosody-config:
     - target: /etc/prosody/conf.avail/{{ server_id }}.cfg.lua
     - require:
       - file: /etc/prosody/conf.avail/{{ server_id }}.cfg.lua
+
+/etc/ssl/private/{{ server_id }}.key:
+  file.managed:
+    - source: salt://software/jitsi-meet/certs/server.key
+    - user: root
+    - group: ssl-cert
+    - mode: 640
+
+/etc/ssl/certs/{{ server_id }}.pem:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 644
+
+build-{{ server_id }}-ssl-cert:
+  file.append:
+    - name: /etc/ssl/certs/{{ server_id }}.pem
+    - sources:
+      - salt://software/jitsi-meet/certs/server.crt
+      - salt://software/jitsi-meet/certs/chain.pem
