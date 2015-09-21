@@ -117,23 +117,6 @@ add-prosody-user:
     - require:
       - file: /usr/lib/prosody/modules/mod_listusers.lua
 
-/usr/share/jitsi-videobridge/.sip-communicator:
-  file.directory:
-    - user: root
-    - group: root
-    - dir_mode: 755
-    - require:
-      - pkg: jitsi-videobridge-package
-
-/usr/share/jitsi-videobridge/.sip-communicator/sip-communicator.properties:
-  file.managed:
-    - contents: "org.jitsi.impl.neomedia.transform.srtp.SRTPCryptoContext.checkReplay=false"
-    - user: root
-    - group: root
-    - mode: 644
-    - require:
-      - file: /usr/share/jitsi-videobridge/.sip-communicator
-
 /etc/nginx/sites-available/{{ server_id }}.conf:
   file.managed:
     - source: salt://etc/nginx/sites-available/jitsi-meet.conf.jinja
@@ -163,10 +146,6 @@ extend:
         - file: /etc/ssl/private/{{ server_id }}.key
         - file: build-{{ server_id }}-ssl-cert
         - cmd: add-prosody-user
-  jitsi-videobridge-service:
-    service:
-      - watch:
-        - file: /usr/share/jitsi-videobridge/.sip-communicator/sip-communicator.properties
   nginx-service:
     service:
       - require:
