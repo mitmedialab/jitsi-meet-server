@@ -57,6 +57,18 @@ build-jitsi-meet-app-bundle:
     - watch:
       - git: jitsi-meet-git-checkout
 
+/var/www/html/jitsi-meet/config.js:
+  file.managed:
+    - source: salt://software/jitsi-meet/config.js.jinja
+    - template: jinja
+    - context:
+      server_id: {{ server_id }}
+    - user: root
+    - group: root
+    - mode: 644
+    - require:
+      - git: jitsi-meet-git-checkout
+
 /etc/prosody/conf.avail/{{ server_id }}.cfg.lua:
   file.managed:
     - source: salt://etc/prosody/conf.avail/domain.cfg.lua.jinja
