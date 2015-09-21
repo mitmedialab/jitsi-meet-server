@@ -7,8 +7,7 @@
 # Server environment.
 {% set server_env = salt['grains.get']('server:env', 'development') -%}
 {% set server_type = salt['grains.get']('server:type', '') -%}
-{% set server_timezone = salt['pillar.get']('server:timezone', 'America/Denver') -%}
-{% set server_encryption_password = salt['pillar.get']('software:server:encryption_password', 'ClueCon') -%}
+{% set server_timezone = salt['pillar.get']('server:timezone', 'Etc/UTC') -%}
 
 # Network.
 # The server ID, set by the salt minion config file - must be edited there.
