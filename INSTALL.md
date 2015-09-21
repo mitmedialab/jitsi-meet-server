@@ -1,6 +1,3 @@
-# Overview
-Vagrant/Salt configuration for automatically deploying [Jitsi Meet](https://jitsi.org/Projects/JitsiMeet) server.
-
 ## Installation
 
 ### Vagrant development servers.
@@ -18,16 +15,10 @@ Vagrant/Salt configuration for automatically deploying [Jitsi Meet](https://jits
 
 ### Production servers.
  1. Start with a fresh Debian 8 install
- 1. ```apt-get -y install git```
- 1. ```mkdir -p /var/local/git```
- 1. ```cd /var/local/git && git clone https://github.com/unhangout/jitsi-meet-server.git```
- 1. ```ln -s /var/local/git/jitsi-meet-server/salt /srv/salt```
- 1. ```cd && wget -O install_salt.sh https://bootstrap.saltstack.com && sh install_salt.sh -P git v2014.7.6 && systemctl disable salt-minion.service && systemctl stop salt-minion.service```
- 1. ```cp /var/local/git/jitsi-meet-server/production/salt/minion /etc/salt/```
- 1. Edit <code>/etc/salt/minion</code>, replacing <code>###SALT_MINION_ID###</code> with the hostname of the server.
- 1. ```cp /var/local/git/jitsi-meet-server/production/salt/grains.conf /etc/salt/minion.d/```
- 1. Follow instructions below for configuring pillar data and SSL certs.
- 1. ```salt-call state.highstate```
+ 1. Make sure the hostname of the server is set to the fully qualified domain name wanted for the installation. You can use the hostname command to set it, eg. ```hostname www.example.com```
+ 1. Load ```production/debian_bootstrap.sh``` to the server, make sure it's executable, and execute it.
+ 1. When it completes, follow the instructions below for configuring pillar data and SSL certs.
+ 1. Run ```salt-call state.highstate```
 
 ### Configuring pillar data
 
@@ -47,3 +38,7 @@ Vagrant/Salt configuration for automatically deploying [Jitsi Meet](https://jits
 Note that these SSL files are constructed on the server automatically from the files listed above -- if the server certificate, key, or chain files are ever replaced, these files should be removed, and Salt's <code>state.highstate</code> should be run to rebuild them:
    * /etc/ssl/private/[domain_name].key
    * /etc/ssl/private/[domain_name].pem
+
+### Known issues
+
+   * The initial NPM bootstrap fails when trying to create a git commit hook file. Re-running ```salt-call state.highstate``` should correct the issue.
