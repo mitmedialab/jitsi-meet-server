@@ -1,0 +1,21 @@
+server_names_hash_bucket_size 64;
+
+server {
+    listen 80;
+    server_name {{ server_id }};
+    # set the root
+    root /var/www/html/jitsi-meet;
+    index index.html;
+    location ~ ^/([a-zA-Z0-9=\?]+)$ {
+        rewrite ^/(.*)$ / break;
+    }
+    location / {
+        ssi on;
+    }
+    # BOSH
+    location /http-bind {
+        proxy_pass      http://localhost:5280/http-bind;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $http_host;
+    }
+}

@@ -24,7 +24,11 @@
 {% set host_entries = salt['pillar.get']('server:network:host_entries', []) -%}
 
 # Jitsi.
-
 {% set jitsi_videobridge_password = salt['pillar.get']('software:jisti:videobridge:password', 'secret') -%}
 {% set jicofo_domain_password = salt['pillar.get']('software:jisti:jicofo:domain_password', 'secret') -%}
 {% set jicofo_user_password = salt['pillar.get']('software:jisti:jicofo:user_password', 'secret') -%}
+
+# Jitsi Meet.
+{% set jitsi_meet_git_url = salt['pillar.get']('software:jisti:meet:git:url', 'https://github.com/jitsi/jitsi-meet.git') -%}
+{% set jitsi_meet_git_branch = salt['pillar.get']('software:jisti:meet:git:branch', 'master') -%}
+
