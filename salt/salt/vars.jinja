@@ -26,4 +26,5 @@
 # Jitsi.
 
 {% set jitsi_videobridge_password = salt['pillar.get']('software:jisti:videobridge:password', 'secret') -%}
-{% set jicofo_password = salt['pillar.get']('software:jisti:jicofo:password', 'secret') -%}
+{% set jicofo_domain_password = salt['pillar.get']('software:jisti:jicofo:domain_password', 'secret') -%}
+{% set jicofo_user_password = salt['pillar.get']('software:jisti:jicofo:user_password', 'secret') -%}

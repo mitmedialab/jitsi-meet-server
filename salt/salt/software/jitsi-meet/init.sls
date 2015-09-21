@@ -1,7 +1,13 @@
-{% from 'vars.jinja' import server_id, jitsi_videobridge_password, jicofo_password with context %}
+{% from 'vars.jinja' import
+  jitsi_videobridge_password,
+  jicofo_domain_password,
+  jicofo_user_password,
+  server_id
+with context %}
 
 include:
   - repo.jitsi
+  - service.prosody
 
 jitsi-meet-packages:
   pkg.installed:
@@ -10,7 +16,6 @@ jitsi-meet-packages:
       - jicofo
       - jitsi-videobridge
       - nginx
-      - prosody
     - require:
       - pkgrepo: jitsi-repo
 
@@ -21,7 +26,7 @@ jitsi-meet-packages:
     - context:
       server_id: {{ server_id }}
       jitsi_videobridge_password: {{ jitsi_videobridge_password }}
-      jicofo_password: {{ jicofo_password }}
+      jicofo_domain_password: {{ jicofo_domain_password }}
     - user: root
     - group: root
     - mode: 644
@@ -54,3 +59,16 @@ build-{{ server_id }}-ssl-cert:
     - sources:
       - salt://software/jitsi-meet/certs/server.crt
       - salt://software/jitsi-meet/certs/chain.pem
+
+add-prosody-user:
+  cmd.run:
+    - name: prosodyctl register focus auth.{{ server_id }} {{ jicofo_user_password }}
+    - unless: test -n "`prosodyctl mod_listusers | grep focus@auth.{{ server_id }}`"
+    - require:
+      - file: /usr/lib/prosody/modules/mod_listusers.lua
+
+extend:
+  prosody-service:
+    service:
+      - watch:
+        - cmd: add-prosody-user

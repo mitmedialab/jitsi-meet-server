@@ -26,6 +26,6 @@ VirtualHost "auth.{{ server_id }}"
         authentication = "internal_plain"
 
 Component "focus.{{ server_id }}"
-    component_secret = "{{ jicofo_password }}"
+    component_secret = "{{ jicofo_domain_password }}"
 
 -- vi: ft=lua

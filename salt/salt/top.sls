@@ -15,4 +15,5 @@ base:
     - service.salt-minion
     - service.ntp
     - service.postfix
+    - service.prosody
     - software.jitsi-meet
