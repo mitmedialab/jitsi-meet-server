@@ -3,4 +3,4 @@ Vagrant/Salt configuration for automatically deploying [Jitsi Meet](https://jits
 
 ## Installation
 
-See [INSTALL.md].
+See [INSTALL](INSTALL.md).
