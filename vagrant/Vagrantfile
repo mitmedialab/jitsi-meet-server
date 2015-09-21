@@ -14,6 +14,10 @@ Vagrant.configure(2) do |config|
     host: ###SSH_PORT###,
     id: "ssh"
 
+  # In case the vagrant-vbguest plugin is installed, the auto-update can be
+  # enabled after initial boot.
+  config.vbguest && config.vbguest.auto_update = false
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.

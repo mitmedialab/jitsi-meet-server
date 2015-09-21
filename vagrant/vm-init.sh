@@ -97,6 +97,10 @@ vagrant ssh -- "sudo apt-get -q -y install rsync vim"
 vagrant plugin install vagrant-vbguest
 vagrant plugin install vagrant-hostsupdater
 
+echo "Activating vagrant-vbguest plugin..."
+sed -i.bak "s/config\.vbguest\.auto_update = false$/config.vbguest.auto_update = true/" Vagrantfile
+rm Vagrantfile.bak
+
 # Reloading here allows the vagrant-vbguest plugin to handle its job before
 # the rest of the install.
 echo "Provisioning server..."
