@@ -4,7 +4,7 @@ Vagrant/Salt configuration for automatically deploying [Jitsi Meet](https://jits
 ## Installation
 
 ### Vagrant development servers.
- 1. Install [Git](http://git-scm.com), [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org). OS X [Homebrew](http://brew.sh) users, consider easy installation via [Homebrew Cask](http://caskroom.io).
+ 1. Install [Git](http://git-scm.com), [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org). OS X [Homebrew](http://brew.sh) users, consider easy installation via [Homebrew Cask](http://caskroom.io). *NOTE:* VirtualBox 5.x appears to have some issues creating symlinks. Until this issue is resolved, recommend to install the latest 4.3.x version (Homebrew Cask users can use [homebrew-cask-versions](https://github.com/caskroom/homebrew-versions)).
  1. Run the following command to checkout this project: ```git clone https://github.com/thehunmonkgroup/jitsi-meet-server.git```
  1. From the command line, change to the <code>vagrant</code> directory, and you'll find <code>settings.sh.example</code>. Copy that file in the same directory to <code>settings.sh</code>.
  1. Edit to taste, the default values will most likely work just fine.
@@ -20,12 +20,12 @@ Vagrant/Salt configuration for automatically deploying [Jitsi Meet](https://jits
  1. Start with a fresh Debian 8 install
  1. ```apt-get -y install git```
  1. ```mkdir -p /var/local/git```
- 1. ```cd /var/local/git && git clone https://github.com/thehunmonkgroup/jitsi-meet-server.git```
+ 1. ```cd /var/local/git && git clone https://github.com/unhangout/jitsi-meet-server.git```
  1. ```ln -s /var/local/git/jitsi-meet-server/salt /srv/salt```
  1. ```cd && wget -O install_salt.sh https://bootstrap.saltstack.com && sh install_salt.sh -P git v2014.7.6 && systemctl disable salt-minion.service && systemctl stop salt-minion.service```
- 1. ```cp /var/local/git/unhangout-video-server/production/salt/minion /etc/salt/```
+ 1. ```cp /var/local/git/jitsi-meet-server/production/salt/minion /etc/salt/```
  1. Edit <code>/etc/salt/minion</code>, replacing <code>###SALT_MINION_ID###</code> with the hostname of the server.
- 1. ```cp /var/local/git/unhangout-video-server/production/salt/grains.conf /etc/salt/minion.d/```
+ 1. ```cp /var/local/git/jitsi-meet-server/production/salt/grains.conf /etc/salt/minion.d/```
  1. Follow instructions below for configuring pillar data and SSL certs.
  1. ```salt-call state.highstate```
 
@@ -39,10 +39,11 @@ Vagrant/Salt configuration for automatically deploying [Jitsi Meet](https://jits
 ### Configuring SSL data
 
  * You need valid SSL certificates in order for WebRTC to function properly, so get some from a provider.
- * Place the following files into the <code>salt/salt/etc/ssl/</code> directory:
-   * cert.pem: The server's SSL certificate.
-   * key.pem: The server's SSL private key.
+ * Place the following files into the <code>salt/salt/software/jitsi-meet/certs/</code> directory:
+   * server.crt: The server's SSL certificate.
+   * server.key: The server's SSL private key.
    * chain.pem: The SSL chain file or root certificate authority.
 
-Note that these FreeSWITCH SSL files are constructed on the server automatically from the files listed above -- if the server certificate, key, or chain files are ever replaced, these files should be removed, and Salt's <code>state.highstate</code> should be run to rebuild them.
-   * TODO: add files to delete.
+Note that these SSL files are constructed on the server automatically from the files listed above -- if the server certificate, key, or chain files are ever replaced, these files should be removed, and Salt's <code>state.highstate</code> should be run to rebuild them:
+   * /etc/ssl/private/[domain_name].key
+   * /etc/ssl/private/[domain_name].pem
