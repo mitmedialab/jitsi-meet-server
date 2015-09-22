@@ -75,9 +75,6 @@ fi
 sed -i.bak "s%###SALT_MINION_ID###%${SALT_MINION_ID}%g" salt/minion
 rm salt/minion.bak
 
-echo "Temporarily uninstalling vagrant-vbguest plugin (if necessary)..."
-vagrant plugin uninstall vagrant-vbguest
-
 echo "Booting server..."
 vagrant up --no-provision
 
@@ -94,8 +91,8 @@ vagrant ssh -- "sudo apt-get -q -y install gcc make linux-kernel-headers linux-h
 echo "Installing some useful preliminary packages"
 vagrant ssh -- "sudo apt-get -q -y install rsync vim"
 
-vagrant plugin install vagrant-vbguest
 vagrant plugin install vagrant-hostsupdater
+vagrant plugin install vagrant-vbguest
 
 echo "Activating vagrant-vbguest plugin..."
 sed -i.bak "s/config\.vbguest\.auto_update = false$/config.vbguest.auto_update = true/" Vagrantfile
