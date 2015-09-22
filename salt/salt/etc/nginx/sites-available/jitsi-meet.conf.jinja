@@ -7,9 +7,13 @@ server {
     root /var/www/html/jitsi-meet;
     index index.html;
     location ~ ^/([a-zA-Z0-9=\?]+)$ {
+        # TODO: Remove this when HTTPS is set up.
+        add_header Strict-Transport-Security "max-age=0";
         rewrite ^/(.*)$ / break;
     }
     location / {
+        # TODO: Remove this when HTTPS is set up.
+        add_header Strict-Transport-Security "max-age=0";
         ssi on;
     }
     # BOSH
