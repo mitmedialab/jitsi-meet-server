@@ -8,6 +8,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "###VAGRANT_VM_BOX###"
+  config.vm.box_check_update = false
 
   # In case the vagrant-vbguest plugin is installed, the auto-update can be
   # enabled after initial boot.
