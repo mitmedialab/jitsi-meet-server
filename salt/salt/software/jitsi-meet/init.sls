@@ -66,18 +66,17 @@ npm-bootstrap-jitsi-meet:
     - require:
       - npm: jitsi-meet-node-packages
       - cmd: git-commit-custom-config
-    - watch:
+    - onchanges:
       - git: jitsi-meet-git-checkout
 
 build-jitsi-meet-app-bundle:
   cmd.run:
     - name: make
     - cwd: /var/www/html/jitsi-meet
-    - unless: test -f /var/www/html/jitsi-meet/libs/app.bundle.min.js && test -f /var/www/html/jitsi-meet/libs/app.bundle.min.map
     - use_vt: True
     - require:
       - npm: npm-bootstrap-jitsi-meet
-    - watch:
+    - onchanges:
       - git: jitsi-meet-git-checkout
 
 /etc/prosody/conf.avail/{{ server_id }}.cfg.lua:
