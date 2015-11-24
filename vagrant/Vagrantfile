@@ -137,9 +137,9 @@ Vagrant.configure(2) do |config|
   #config.vm.provision "shell", path: "boot.development"
 
   # This is in here because something is clogging up the regular DNS.
-  config.vm.provision :shell, run: "always" do |s|
-    s.inline = "echo options single-request-reopen | sudo tee /etc/resolv.conf; echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf"
-  end
+  #config.vm.provision :shell, run: "always" do |s|
+  #  s.inline = "echo options single-request-reopen | sudo tee /etc/resolv.conf; echo nameserver 8.8.8.8 | sudo tee -a /etc/resolv.conf"
+  #end
 
   # TODO: Remove this when https://github.com/mitchellh/vagrant/issues/5973 is fixed.
   config.vm.provision "shell", inline: "sudo mkdir -p /etc/salt && sudo cp /vagrant/salt/minion /etc/salt/"
