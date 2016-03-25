@@ -65,7 +65,7 @@ npm-bootstrap-jitsi-meet:
     - name: /var/www/html/jitsi-meet
     - require:
       - npm: jitsi-meet-node-packages
-      - cmd: git-commit-custom-config
+      #- cmd: git-commit-custom-config
     - onchanges:
       - git: jitsi-meet-git-checkout
 
