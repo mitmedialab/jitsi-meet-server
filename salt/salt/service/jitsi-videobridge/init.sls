@@ -26,6 +26,23 @@ jitsi-videobridge-package:
     - require:
       - pkg: jitsi-videobridge-package
 
+/usr/share/jitsi-videobridge/.sip-communicator:
+  file.directory:
+    - user: root
+    - group: root
+    - dir_mode: 755
+    - require:
+      - pkg: jitsi-videobridge-package
+
+/usr/share/jitsi-videobridge/.sip-communicator/sip-communicator.properties:
+  file.managed:
+    - source: salt://service/jitsi-videobridge/sip-communicator.properties
+    - user: root
+    - group: root
+    - mode: 644
+    - require:
+      - file: /usr/share/jitsi-videobridge/.sip-communicator
+
 jitsi-videobridge-service:
   service.running:
     - name: jitsi-videobridge
@@ -33,4 +50,5 @@ jitsi-videobridge-service:
     - watch:
       - pkg: jitsi-videobridge-package
       - file: /etc/jitsi/videobridge/config
+      - file: /usr/share/jitsi-videobridge/.sip-communicator/sip-communicator.properties
 

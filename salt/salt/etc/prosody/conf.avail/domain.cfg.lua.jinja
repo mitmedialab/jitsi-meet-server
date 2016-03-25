@@ -13,17 +13,17 @@ VirtualHost "{{ server_id }}"
         modules_enabled = {
             "bosh";
             "pubsub";
-            "ping"; -- Enable mod_ping
         }
-
-Component "conference.{{ server_id }}" "muc"
-admins = { "focus@auth.{{ server_id }}" }
-
-Component "jitsi-videobridge.{{ server_id }}"
-    component_secret = "{{ jitsi_videobridge_password }}"
 
 VirtualHost "auth.{{ server_id }}"
         authentication = "internal_plain"
+
+admins = { "focus@auth.{{ server_id }}" }
+
+Component "conference.{{ server_id }}" "muc"
+
+Component "jitsi-videobridge.{{ server_id }}"
+    component_secret = "{{ jitsi_videobridge_password }}"
 
 Component "focus.{{ server_id }}"
     component_secret = "{{ jicofo_domain_password }}"
