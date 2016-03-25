@@ -14,7 +14,8 @@ base:
     - software.git
     - software.nodejs
     - software.npm
-    - service.salt-minion
+    # Doesn't seem to be installed, leaving here as a placemarker.
+    # - service.salt-minion
     - service.ntp
     - service.postfix
     - service.prosody
