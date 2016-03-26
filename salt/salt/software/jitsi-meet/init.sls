@@ -4,6 +4,7 @@
   jitsi_videobridge_password,
   jicofo_domain_password,
   jicofo_user_password,
+  server_env,
   server_id,
   server_type
 with context %}
