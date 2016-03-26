@@ -4,7 +4,8 @@
   jitsi_videobridge_password,
   jicofo_domain_password,
   jicofo_user_password,
-  server_id
+  server_id,
+  server_type
 with context %}
 
 # Set up the dependency line for the Git checkout. This is necessary because on
