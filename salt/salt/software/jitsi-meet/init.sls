@@ -53,7 +53,6 @@ jitsi-meet-git-checkout:
 npm-bootstrap-jitsi-meet:
   npm.bootstrap:
     - name: /var/www/html/jitsi-meet
-    - use_vt: True
     - require:
       - npm: jitsi-meet-node-packages
     - onchanges:
