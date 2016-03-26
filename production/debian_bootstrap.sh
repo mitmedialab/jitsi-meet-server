@@ -16,6 +16,7 @@ rm install_salt.sh
 cp /var/local/git/${PROJECT_NAME}/production/salt/minion /etc/salt/
 sed -i.bak "s%###SALT_MINION_ID###%${HOSTNAME}%g" /etc/salt/minion
 rm /etc/salt/minion.bak
+mkdir -p /etc/salt/minion.d
 cp /var/local/git/${PROJECT_NAME}/production/salt/grains.conf /etc/salt/minion.d/
 
 echo "
