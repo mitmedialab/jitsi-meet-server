@@ -31,7 +31,7 @@ Vagrant.configure(2) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.38.11"
+  config.vm.network "private_network", ip: "192.168.39.11"
   config.hostsupdater.aliases = ["###SALT_MINION_ID###"]
 
   # Create a public network, which generally matched to bridged network.
@@ -52,7 +52,7 @@ Vagrant.configure(2) do |config|
   # Uncomment this if you want a the GIT_CODE_DIR checkout on the host to be
   # available on the VM. Be sure to set [vm_dir] to the location you want the
   # directory to be available on the VM.
-  #config.vm.synced_folder "###GIT_CODE_DIR###/", "[vm_dir]/", owner: "root", group: "root"
+  config.vm.synced_folder "###GIT_CODE_DIR###/", "/var/www/html/jitsi-meet/", owner: "root", group: "root"
 
 
 
@@ -153,4 +153,10 @@ Vagrant.configure(2) do |config|
     salt.verbose = true
     salt.run_highstate = true
   end
+
+  # Initial build for Jitsi Meet, future builds handled manually by the dev.
+  config.vm.provision :shell do |s|
+    s.inline = "sudo /usr/local/bin/rebuild-jitsi-meet.sh"
+  end
+
 end

@@ -2,7 +2,7 @@
 
 # Convenience script for starting/stopping the virtual machine.
 
-VM_INSTALL_DIR="${HOME}/vagrant/example"
+VM_INSTALL_DIR="${HOME}/vagrant/jitsi-meet"
 
 SCRIPT_NAME=`basename $0`
 

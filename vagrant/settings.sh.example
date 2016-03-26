@@ -4,6 +4,19 @@
 # to customize any of the listed installation variables. Default values are
 # shown in the commented out lines.
 
+# Install path for the virtual machine. Make sure that the user executing the
+# installation script has permissions to create this directory.
+#VM_INSTALL_DIR="${HOME}/vagrant/jitsi-meet"
+
+# Directory for the local checkout of the Jitsi Meet software.
+#GIT_CODE_DIR="${HOME}/git/jitsi-meet"
+
+# URL of the Jitsi Meet repository to clone.
+#GIT_CLONE_URL="https://github.com/jitsi/jitsi-meet"
+
+# Git branch to clone.
+#GIT_CODE_BRANCH="master"
+
 # Space-separated list of ports to verify as open on the host.
 #PORTS_TO_CHECK="2222"
 
@@ -11,10 +24,6 @@
 # will be auto-configured by the deployment script, and is included here only
 # for reference.
 #VAGRANT_CONFIG_DIR=
-
-# Install path for the virtual machine. Make sure that the user executing the
-# installation script has permissions to create this directory.
-#VM_INSTALL_DIR="${HOME}/vagrant/unhangout-video-server"
 
 # Box name to use for the Vagrantfile, config.vm.box setting.
 #VAGRANT_VM_BOX="bento/debian-8.2"
@@ -28,12 +37,12 @@
 #SSH_PORT="2222"
 
 # The label for the entry to be placed in .ssh/config.
-#SSH_CONFIG_LABEL="example"
+#SSH_CONFIG_LABEL="jitsi-meet.local"
 
 # The minion ID to be used in /etc/salt/minion.
-#SALT_MINION_ID="localhost.localdomain"
+#SALT_MINION_ID="jitsi-meet.stirlab.local"
 
 # I've seen instances where the files need a bit of time to sync to shared
 # folders on the host. Setting this to 'yes' allows 60 seconds for that before
 # the reboot after the salt provisioning.
-#ALLOW_VM_FILE_SYNC_TIME="no"
+#ALLOW_VM_FILE_SYNC_TIME="yes"

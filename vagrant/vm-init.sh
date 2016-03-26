@@ -5,11 +5,11 @@
 VAGRANT_CONFIG_DIR=$1
 DEV_USER=$2
 DEV_SERVER=$3
-VM_INSTALL_DIR="${HOME}/vagrant/example"
-GIT_CODE_DIR=""
+VM_INSTALL_DIR="${HOME}/vagrant/jitsi-meet"
+GIT_CODE_DIR="${HOME}/git/jitsi-meet"
 SALT_DIR="`dirname $VAGRANT_CONFIG_DIR 2> /dev/null`/salt"
 VAGRANT_VM_BOX="bento/debian-8.2"
-SALT_MINION_ID="localhost.localdomain"
+SALT_MINION_ID="jitsi-meet.stirlab.local"
 ALLOW_VM_FILE_SYNC_TIME="yes"
 SSH_PORT="2222"
 

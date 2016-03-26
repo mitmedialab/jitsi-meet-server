@@ -3,8 +3,8 @@
 # Removes all files associated with the development environment, use with
 # extreme caution!
 
-VM_INSTALL_DIR="${HOME}/vagrant/example"
-GIT_CODE_DIR=""
+VM_INSTALL_DIR="${HOME}/vagrant/jitsi-meet"
+GIT_CODE_DIR="${HOME}/git/jitsi-meet"
 
 SCRIPT_NAME=`basename $0`
 

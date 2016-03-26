@@ -6,10 +6,11 @@
 
 DEV_SERVER=""
 SSH_PORT="2222"
-SSH_CONFIG_LABEL="example"
+SSH_CONFIG_LABEL="jitsi-meet.local"
 MESSAGE_STORE=""
-VM_INSTALL_DIR="${HOME}/vagrant/example"
-GIT_CODE_DIR=""
+VM_INSTALL_DIR="${HOME}/vagrant/jitsi-meet"
+GIT_CODE_DIR="${HOME}/git/jitsi-meet"
+GIT_CLONE_URL="https://github.com/jitsi/jitsi-meet"
 GIT_CODE_BRANCH="master"
 
 SCRIPT_NAME=`basename $0`
@@ -68,6 +69,7 @@ check_executable() {
 setup_git_repo() {
   if [ -n "${GIT_CODE_DIR}" ] && [ ! -d "${GIT_CODE_DIR}" ]; then
     echo "Setting up $GIT_CLONE_URL repository in ${GIT_CODE_DIR}..."
+    mkdir -p `dirname ${GIT_CODE_DIR}`
     git clone $GIT_CLONE_URL $GIT_CODE_DIR
     cd ${GIT_CODE_DIR}
     if [ "$GIT_CODE_BRANCH" = "master" ]; then
@@ -132,6 +134,8 @@ check_executable vagrant Vagrant
 
 echo "Checking for Virtualbox..."
 check_executable VBoxManage Virtualbox
+
+setup_git_repo
 
 if [ -n "$MESSAGE_STORE" ]; then
   echo

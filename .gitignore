@@ -12,5 +12,7 @@ salt/pillar/server/development.sls
 salt/pillar/server/production.sls
 
 # SSL certs.
-salt/salt/software/jitsi-meet/certs/
+salt/salt/software/jitsi-meet/certs/chain.pem
+salt/salt/software/jitsi-meet/certs/server.crt
+salt/salt/software/jitsi-meet/certs/server.key
 

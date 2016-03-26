@@ -6,6 +6,13 @@
 # For more details on how to write pillar files, see:
 # http://docs.saltstack.com/en/latest/topics/pillar
 
+#software:
+#  jisti:
+#    meet:
+#      git:
+#        url: https://github.com/jitsi/jitsi-meet.git
+#        branch: master
+
 # Add SSH public keys here for users you wish to have root access to the server.
 #ssh:
 #  pubkeys:

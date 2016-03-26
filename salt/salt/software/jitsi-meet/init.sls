@@ -7,6 +7,11 @@
   server_id
 with context %}
 
+# Set up the dependency line for the Git checkout. This is necessary because on
+# Vagrant installs the checkout is an existing linked folder on the VM.
+{% set git_checkout_dependency = server_type == 'vagrant' and 'file: /var/www/html/jitsi-meet' or 'git: jitsi-meet-git-checkout' -%}
+# git_checkout_dependency is {{ git_checkout_dependency }}
+
 include:
   - repo.jitsi
   - software.npm
@@ -30,6 +35,7 @@ jitsi-meet-node-packages:
     - require:
       - pkg: nginx-package
 
+{% if server_type != 'vagrant' -%}
 jitsi-meet-git-checkout:
   git.latest:
     - name: {{ jitsi_meet_git_url }}
@@ -37,6 +43,7 @@ jitsi-meet-git-checkout:
     - target: /var/www/html/jitsi-meet
     - require:
       - file: /var/www/html/jitsi-meet
+{% endif -%}
 
 /var/www/html/jitsi-meet/config.js:
   file.managed:
@@ -48,7 +55,7 @@ jitsi-meet-git-checkout:
     - group: root
     - mode: 644
     - require:
-      - git: jitsi-meet-git-checkout
+      - {{ git_checkout_dependency }}
 
 npm-bootstrap-jitsi-meet:
   npm.bootstrap:
@@ -56,7 +63,7 @@ npm-bootstrap-jitsi-meet:
     - require:
       - npm: jitsi-meet-node-packages
     - onchanges:
-      - git: jitsi-meet-git-checkout
+      - {{ git_checkout_dependency }}
 
 build-jitsi-meet-app-bundle:
   cmd.run:
@@ -68,7 +75,7 @@ build-jitsi-meet-app-bundle:
     - require:
       - npm: npm-bootstrap-jitsi-meet
     - onchanges:
-      - git: jitsi-meet-git-checkout
+      - {{ git_checkout_dependency }}
 
 /etc/prosody/conf.avail/{{ server_id }}.cfg.lua:
   file.managed:
@@ -91,9 +98,12 @@ symlink-prosody-config:
     - require:
       - file: /etc/prosody/conf.avail/{{ server_id }}.cfg.lua
 
+
+{% set ssl_key_prefix = server_type == 'vagrant' and 'local.' or '' -%}
+
 /etc/ssl/private/{{ server_id }}.key:
   file.managed:
-    - source: salt://software/jitsi-meet/certs/server.key
+    - source: salt://software/jitsi-meet/certs/{{ ssl_key_prefix }}server.key
     - user: root
     - group: ssl-cert
     - mode: 640
@@ -108,8 +118,8 @@ build-{{ server_id }}-ssl-cert:
   file.append:
     - name: /etc/ssl/certs/{{ server_id }}.pem
     - sources:
-      - salt://software/jitsi-meet/certs/server.crt
-      - salt://software/jitsi-meet/certs/chain.pem
+      - salt://software/jitsi-meet/certs/{{ ssl_key_prefix }}server.crt
+      - salt://software/jitsi-meet/certs/{{ ssl_key_prefix }}chain.pem
 
 add-prosody-user:
   cmd.run:
@@ -144,6 +154,15 @@ add-nginx-user-to-ssl-cert-group:
       - ssl-cert
     - remove_groups: False
 
+{% if server_env == 'development' -%}
+/usr/local/bin/rebuild-jitsi-meet.sh:
+  file.managed:
+    - source: salt://software/jitsi-meet/script/rebuild-jitsi-meet.sh
+    - user: root
+    - group: root
+    - mode: 755
+{% endif -%}
+
 extend:
   prosody-service:
     service:
@@ -157,7 +176,7 @@ extend:
   nginx-service:
     service:
       - require:
-        - git: jitsi-meet-git-checkout
+        - {{ git_checkout_dependency }}
         - file: symlink-nginx-config
         - user: add-nginx-user-to-ssl-cert-group
       - watch:
