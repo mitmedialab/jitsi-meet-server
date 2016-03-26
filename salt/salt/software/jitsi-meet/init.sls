@@ -163,3 +163,4 @@ extend:
         - file: symlink-nginx-config
       - watch:
         - file: /etc/nginx/sites-available/{{ server_id }}.conf
+        - file: build-{{ server_id }}-ssl-cert

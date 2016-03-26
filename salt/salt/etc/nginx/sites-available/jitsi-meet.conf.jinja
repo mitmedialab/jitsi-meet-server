@@ -1,25 +1,41 @@
 server_names_hash_bucket_size 64;
 
 server {
+
     listen 80;
     server_name {{ server_id }};
-    # set the root
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+
+    listen 443;
+    server_name {{ server_id }};
+    keepalive_timeout 70;
+
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    ssl_certificate /etc/ssl/certs/{{ server_id }}.pem;
+    ssl_certificate_key /etc/ssl/certs/{{ server_id }}.key;
+
     root /var/www/html/jitsi-meet;
     index index.html;
+
+    add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload";
+
     location ~ ^/([a-zA-Z0-9=\?]+)$ {
-        # TODO: Remove this when HTTPS is set up.
-        add_header Strict-Transport-Security "max-age=0";
         rewrite ^/(.*)$ / break;
     }
+
     location / {
-        # TODO: Remove this when HTTPS is set up.
-        add_header Strict-Transport-Security "max-age=0";
         ssi on;
     }
+
     # BOSH
     location /http-bind {
         proxy_pass      http://localhost:5280/http-bind;
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_set_header Host $http_host;
     }
+
 }
