@@ -38,40 +38,32 @@ jitsi-meet-git-checkout:
     - require:
       - file: /var/www/html/jitsi-meet
 
-#/var/www/html/jitsi-meet/config.js:
-#  file.managed:
-#    - source: salt://software/jitsi-meet/config.js.jinja
-#    - template: jinja
-#    - context:
-#      server_id: {{ server_id }}
-#    - user: root
-#    - group: root
-#    - mode: 644
-#    - require:
-#      - git: jitsi-meet-git-checkout
-#
-## This is very lame, but the jitsi-meet repo has a pre-commit hook that breaks
-## the rest of the build if there are uncommitted changes.
-#git-commit-custom-config:
-#  cmd.run:
-#    - name: git commit -am"committing custom config"
-#    - cwd: /var/www/html/jitsi-meet
-#    - unless: test -z "`git status --short | grep config.js`"
-#    - require:
-#      - file: /var/www/html/jitsi-meet/config.js
+/var/www/html/jitsi-meet/config.js:
+  file.managed:
+    - source: salt://software/jitsi-meet/config.js.jinja
+    - template: jinja
+    - context:
+      server_id: {{ server_id }}
+    - user: root
+    - group: root
+    - mode: 644
+    - require:
+      - git: jitsi-meet-git-checkout
 
 npm-bootstrap-jitsi-meet:
   npm.bootstrap:
     - name: /var/www/html/jitsi-meet
+    - use_vt: True
     - require:
       - npm: jitsi-meet-node-packages
-      #- cmd: git-commit-custom-config
     - onchanges:
       - git: jitsi-meet-git-checkout
 
 build-jitsi-meet-app-bundle:
   cmd.run:
-    - name: make
+    # Their standard Makefile calls npm update, which has some kind of
+    # recursive dependency bug. The bootstrap above is enough.
+    - name: make compile && make uglify && make deploy && make clean
     - cwd: /var/www/html/jitsi-meet
     - use_vt: True
     - require:
