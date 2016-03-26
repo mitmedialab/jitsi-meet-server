@@ -16,7 +16,7 @@ server {
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 10m;
     ssl_certificate /etc/ssl/certs/{{ server_id }}.pem;
-    ssl_certificate_key /etc/ssl/certs/{{ server_id }}.key;
+    ssl_certificate_key /etc/ssl/private/{{ server_id }}.key;
 
     root /var/www/html/jitsi-meet;
     index index.html;
