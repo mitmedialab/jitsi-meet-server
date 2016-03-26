@@ -47,7 +47,7 @@ VAGRANT_CONFIG_DIR=`find_full_path_to_file`
 if [ -f ${VAGRANT_CONFIG_DIR}/settings.sh ]; then
   . ${VAGRANT_CONFIG_DIR}/settings.sh
 fi
-PORTS_TO_CHECK="${SSH_PORT}"
+PORTS_TO_CHECK="${PORTS_TO_CHECK} ${SSH_PORT}"
 
 CWD=`pwd`
 
