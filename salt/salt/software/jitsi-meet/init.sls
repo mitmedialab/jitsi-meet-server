@@ -146,6 +146,13 @@ symlink-nginx-config:
     - require:
       - file: /etc/nginx/sites-available/{{ server_id }}.conf
 
+add-nginx-user-to-ssl-cert-group:
+  user.present:
+    - name: www-data
+    - optional_groups:
+      - ssl-cert
+    - remove_groups: False
+
 extend:
   prosody-service:
     service:
@@ -161,6 +168,7 @@ extend:
       - require:
         - git: jitsi-meet-git-checkout
         - file: symlink-nginx-config
+        - user: add-nginx-user-to-ssl-cert-group
       - watch:
         - file: /etc/nginx/sites-available/{{ server_id }}.conf
         - file: build-{{ server_id }}-ssl-cert
