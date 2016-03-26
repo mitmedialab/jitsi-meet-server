@@ -16,6 +16,7 @@ base-packages:
       - patchutils
       # Needed for pkgrepo Salt state.
       - python-apt
+      - sudo
       - tcpdump
       - telnet
       - tmux
